@@ -1,13 +1,13 @@
-package com.example.springbootjpa.entity;
+package com.example.demo.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.hibernate.mapping.Value;
 
 @Entity
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,10 +15,11 @@ public class Product {
     private String description;
     private Double value;
 
-    public Product() {
+    public Product(){
     }
 
-    public Product(String name, String description, Double value) {
+    public Product(Long id, String name, String description, Double value) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.value = value;
@@ -48,7 +49,7 @@ public class Product {
         this.description = description;
     }
 
-    public Double getValue () {
+    public Double getValue() {
         return value;
     }
 
