@@ -18,7 +18,7 @@ public class OrderController {
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
-    
+
     @PostMapping("/order")
     public ResponseEntity<Order> createOrder(@RequestBody  CreateOrderRequest request) {
         Order order = orderService.createOrder(request.getCustomerId(), request.getProduct());
