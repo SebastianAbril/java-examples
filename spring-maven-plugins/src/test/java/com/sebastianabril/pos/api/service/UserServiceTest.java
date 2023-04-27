@@ -1,7 +1,12 @@
 package com.sebastianabril.pos.api.service;
 
+import static org.mockito.Mockito.*;
+
 import com.sebastianabril.pos.api.entity.Role;
 import com.sebastianabril.pos.api.entity.User;
+import com.sebastianabril.pos.api.repository.RoleRepository;
+import com.sebastianabril.pos.api.repository.UserRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,18 +15,13 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import com.sebastianabril.pos.api.repository.RoleRepository;
-import com.sebastianabril.pos.api.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Optional;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
-
     @Mock
     private RoleRepository roleRepository;
+
     @Mock
     private UserRepository userRepository;
 
@@ -35,7 +35,7 @@ class UserServiceTest {
     ArgumentCaptor<User> userCaptor;
 
     @Test
-    public void testSaveUser(){
+    public void testSaveUser() {
         //given
         Role adminRole = new Role(1, "Admin", "Admin Role");
         when(roleRepository.findById(1)).thenReturn(Optional.of(adminRole));
@@ -43,7 +43,7 @@ class UserServiceTest {
         when(passwordEncoder.encode("hola123456")).thenReturn("123456holi");
 
         //when
-        userService.save("Pepe","Valencia","pepe@gmail.com","hola123456", 1 );
+        userService.save("Pepe", "Valencia", "pepe@gmail.com", "hola123456", 1);
 
         //then
         verify(userRepository, times(1)).save(any(User.class));
@@ -57,32 +57,37 @@ class UserServiceTest {
     }
 
     @Test
-    public void testRoleIdNotFound(){
+    public void testRoleIdNotFound() {
         when(roleRepository.findById(9)).thenReturn(Optional.empty());
 
-        RuntimeException thrown = Assertions.assertThrows(RuntimeException.class, () ->{
-            userService.save("Pepe","Valencia","pepe@gmail.com","hola123456", 9);
-        });
+        RuntimeException thrown = Assertions.assertThrows(
+            RuntimeException.class,
+            () -> {
+                userService.save("Pepe", "Valencia", "pepe@gmail.com", "hola123456", 9);
+            }
+        );
 
         Assertions.assertEquals("The Role with id: 9 does not exist", thrown.getMessage());
-
     }
 
     @Test
-    public void testEmailAlreadyExist(){
+    public void testEmailAlreadyExist() {
         Role adminRole = new Role(1, "Admin", "Admin Role");
         when(roleRepository.findById(1)).thenReturn(Optional.of(adminRole));
 
         User user = new User(1, "Jhon", "Doe", "jhon@gmail.com", "123456", adminRole);
         when(userRepository.findByEmail("jhon@gmail.com")).thenReturn(Optional.of(user));
 
-        RuntimeException thrown = Assertions.assertThrows(RuntimeException.class, () ->{
-            userService.save("Hola","Gutierrez","jhon@gmail.com","hola123456", 1);
-        });
+        RuntimeException thrown = Assertions.assertThrows(
+            RuntimeException.class,
+            () -> {
+                userService.save("Hola", "Gutierrez", "jhon@gmail.com", "hola123456", 1);
+            }
+        );
 
-        Assertions.assertEquals("The e-mail jhon@gmail.com is already registered, try another one", thrown.getMessage());
+        Assertions.assertEquals(
+            "The e-mail jhon@gmail.com is already registered, try another one",
+            thrown.getMessage()
+        );
     }
 }
-
-
-

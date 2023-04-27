@@ -1,5 +1,10 @@
 package com.sebastianabril.pos.api.controller;
 
+import static net.bytebuddy.matcher.ElementMatchers.is;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sebastianabril.pos.api.controller.dto.UserDTO;
 import com.sebastianabril.pos.api.service.UserService;
@@ -13,16 +18,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static net.bytebuddy.matcher.ElementMatchers.is;
-import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-;
-
 @WebMvcTest(UserController.class)
 class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -30,8 +30,7 @@ class UserControllerTest {
     private UserService userService;
 
     @Test
-    public void saveTest() throws Exception{
-
+    public void saveTest() throws Exception {
         UserDTO userDTO = new UserDTO();
         userDTO.setName("Cleo");
         userDTO.setLastName("Abril");
@@ -39,16 +38,16 @@ class UserControllerTest {
         userDTO.setPassword("cleo123567");
         userDTO.setRoleId(1);
 
-
-        mockMvc.perform(
+        mockMvc
+            .perform(
                 post("/api/user")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(userDTO)))
-                .andExpect(status().isCreated());
-
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(userDTO))
+            )
+            .andExpect(status().isCreated());
     }
 
-@Test
+    @Test
     public void saveInvalidEmailTest() throws Exception {
         UserDTO userDTO = new UserDTO();
         userDTO.setName("Cleo");
@@ -57,14 +56,17 @@ class UserControllerTest {
         userDTO.setPassword("cleo123aaaaaa");
         userDTO.setRoleId(1);
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/api/user")
+        mockMvc
+            .perform(
+                MockMvcRequestBuilders
+                    .post("/api/user")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(userDTO)))
+                    .content(objectMapper.writeValueAsString(userDTO))
+            )
             .andExpect(MockMvcResultMatchers.status().isBadRequest())
             .andExpect(MockMvcResultMatchers.jsonPath("$.errors", hasSize(1)))
             .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0]", Matchers.is("Insert a valid address")));
     }
-
 
     @Test
     public void saveInvalidNameTest() throws Exception {
@@ -75,15 +77,15 @@ class UserControllerTest {
         userDTO.setPassword("cleo123aaaaaa");
         userDTO.setRoleId(1);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/user")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(userDTO)))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.errors", hasSize(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0]", Matchers.is("Insert a name")));
+        mockMvc
+            .perform(
+                MockMvcRequestBuilders
+                    .post("/api/user")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(userDTO))
+            )
+            .andExpect(MockMvcResultMatchers.status().isBadRequest())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.errors", hasSize(1)))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0]", Matchers.is("Insert a name")));
     }
-
-
-
-
 }

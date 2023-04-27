@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
 public class TransferProductRequest {
-
     @PositiveOrZero(message = "Insert origin user's id")
     private Integer originUserId;
 
@@ -18,7 +17,6 @@ public class TransferProductRequest {
     @NotNull(message = "Insert a quantity")
     @Min(1)
     private Integer quantityTransferred;
-
 
     public Integer getOriginUserId() {
         return originUserId;
@@ -51,6 +49,4 @@ public class TransferProductRequest {
     public void setQuantityTransferred(Integer quantityTransferred) {
         this.quantityTransferred = quantityTransferred;
     }
-
-
 }

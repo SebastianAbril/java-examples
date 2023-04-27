@@ -12,12 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class InventoryService {
-
     private UserRepository userRepository;
     private ProductRepository productRepository;
     private InventoryRepository inventoryRepository;
 
-    public InventoryService(UserRepository userRepository, ProductRepository productRepository, InventoryRepository inventoryRepository) {
+    public InventoryService(
+        UserRepository userRepository,
+        ProductRepository productRepository,
+        InventoryRepository inventoryRepository
+    ) {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.inventoryRepository = inventoryRepository;
@@ -26,11 +29,13 @@ public class InventoryService {
     @Transactional
     public Inventory addProductToInventory(Integer userId, Integer productId, Integer quantity) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("user not found"));
-        if(user.getRole().getId() != 1){
+        if (user.getRole().getId() != 1) {
             throw new RuntimeException("The user must be an admin (userId = 1)");
         }
 
-        Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("productId not found"));
+        Product product = productRepository
+            .findById(productId)
+            .orElseThrow(() -> new RuntimeException("productId not found"));
 
         if (quantity <= 0) {
             throw new RuntimeException("quantity must be positive number");
@@ -47,12 +52,11 @@ public class InventoryService {
         }*/
 
         //*****************
-        Inventory inventory = inventoryRepository.findByUserAndProduct(user, product)
-                .orElse(new Inventory(null, user, product, 0));
+        Inventory inventory = inventoryRepository
+            .findByUserAndProduct(user, product)
+            .orElse(new Inventory(null, user, product, 0));
 
         inventory.setQuantity(inventory.getQuantity() + quantity);
-
-
 
         return inventoryRepository.save(inventory);
     }

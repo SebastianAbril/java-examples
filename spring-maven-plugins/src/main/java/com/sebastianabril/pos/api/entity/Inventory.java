@@ -5,10 +5,9 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "inventory")
 public class Inventory {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Integer id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -17,10 +16,10 @@ public class Inventory {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
     private Integer quantity;
 
-    public Inventory() {
-    }
+    public Inventory() {}
 
     public Inventory(Integer id, User user, Product product, Integer quantity) {
         this.id = id;
@@ -63,11 +62,6 @@ public class Inventory {
 
     @Override
     public String toString() {
-        return "Inventory{" +
-                "id=" + id +
-                ", user=" + user +
-                ", product=" + product +
-                ", quantity=" + quantity +
-                '}';
+        return "Inventory{" + "id=" + id + ", user=" + user + ", product=" + product + ", quantity=" + quantity + '}';
     }
 }

@@ -1,7 +1,6 @@
 package com.sebastianabril.pos.api.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -26,10 +25,17 @@ public class Sale {
 
     private Double price;
 
-    public Sale() {
-    }
+    public Sale() {}
 
-    public Sale(Integer id, User user, Product product, Integer quantitySold, LocalDate date, LocalTime time, Double price) {
+    public Sale(
+        Integer id,
+        User user,
+        Product product,
+        Integer quantitySold,
+        LocalDate date,
+        LocalTime time,
+        Double price
+    ) {
         this.id = id;
         this.user = user;
         this.product = product;
@@ -97,14 +103,23 @@ public class Sale {
 
     @Override
     public String toString() {
-        return "Sale{" +
-                "id=" + id +
-                ", user=" + user +
-                ", product=" + product +
-                ", quantitySold=" + quantitySold +
-                ", date=" + date +
-                ", time=" + time +
-                ", price=" + price +
-                '}';
+        return (
+            "Sale{" +
+            "id=" +
+            id +
+            ", user=" +
+            user +
+            ", product=" +
+            product +
+            ", quantitySold=" +
+            quantitySold +
+            ", date=" +
+            date +
+            ", time=" +
+            time +
+            ", price=" +
+            price +
+            '}'
+        );
     }
 }

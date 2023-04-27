@@ -3,17 +3,16 @@ package com.sebastianabril.pos.api.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="role")
+@Table(name = "role")
 public class Role {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String name;
     private String description;
 
-    public Role() {
-    }
+    public Role() {}
 
     public Role(Integer id, String name, String description) {
         this.id = id;

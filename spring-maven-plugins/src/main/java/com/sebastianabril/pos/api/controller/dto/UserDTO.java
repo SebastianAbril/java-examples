@@ -8,14 +8,18 @@ import jakarta.validation.constraints.Size;
 public class UserDTO {
     @NotBlank(message = "Insert a name")
     private String name;
+
     @NotBlank(message = "Insert a last name")
     private String lastName;
+
     @NotBlank(message = "Insert an email")
     @Email(message = "Insert a valid address")
     private String email;
+
     @Size(min = 8, max = 20)
     @NotBlank(message = "Insert a password")
     private String password;
+
     @PositiveOrZero(message = "Insert a role id")
     private Integer roleId;
 
@@ -55,7 +59,7 @@ public class UserDTO {
         return roleId;
     }
 
-    public void setRoleId (Integer roleId) {
+    public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
 }

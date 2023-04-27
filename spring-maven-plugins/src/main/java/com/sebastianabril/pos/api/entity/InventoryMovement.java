@@ -1,17 +1,16 @@
 package com.sebastianabril.pos.api.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Table(name = "inventory_movements")
 @Entity
 public class InventoryMovement {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @ManyToOne
     @JoinColumn(name = "origin_user_id")
     private User originUser;
@@ -26,14 +25,22 @@ public class InventoryMovement {
 
     @Column(name = "quantity_transferred")
     private Integer quantityTransferred;
+
     private LocalDate date;
 
     private LocalTime hour;
 
-    public InventoryMovement() {
-    }
+    public InventoryMovement() {}
 
-    public InventoryMovement(Integer id, User originUser, User destinyUser, Product product, Integer quantityTransferred, LocalDate date, LocalTime hour) {
+    public InventoryMovement(
+        Integer id,
+        User originUser,
+        User destinyUser,
+        Product product,
+        Integer quantityTransferred,
+        LocalDate date,
+        LocalTime hour
+    ) {
         this.id = id;
         this.originUser = originUser;
         this.destinyUser = destinyUser;
@@ -101,14 +108,23 @@ public class InventoryMovement {
 
     @Override
     public String toString() {
-        return "InventoryMovements{" +
-                "id=" + id +
-                ", originUser=" + originUser +
-                ", destinyUser=" + destinyUser +
-                ", product=" + product +
-                ", quantityTransferred=" + quantityTransferred +
-                ", date=" + date +
-                ", hour=" + hour +
-                '}';
+        return (
+            "InventoryMovements{" +
+            "id=" +
+            id +
+            ", originUser=" +
+            originUser +
+            ", destinyUser=" +
+            destinyUser +
+            ", product=" +
+            product +
+            ", quantityTransferred=" +
+            quantityTransferred +
+            ", date=" +
+            date +
+            ", hour=" +
+            hour +
+            '}'
+        );
     }
 }

@@ -1,16 +1,15 @@
 package com.sebastianabril.pos.api.entity;
 
 import jakarta.persistence.*;
-
 import java.util.Objects;
 
 @Entity
 @Table(name = "user")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String name;
     private String lastName;
     private String email;
@@ -20,8 +19,7 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    public User(){
-    }
+    public User() {}
 
     public User(Integer id, String name, String lastName, String email, String password, Role role) {
         this.id = id;
@@ -37,7 +35,14 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id.equals(user.id) && name.equals(user.name) && lastName.equals(user.lastName) && email.equals(user.email) && password.equals(user.password) && role.equals(user.role);
+        return (
+            id.equals(user.id) &&
+            name.equals(user.name) &&
+            lastName.equals(user.lastName) &&
+            email.equals(user.email) &&
+            password.equals(user.password) &&
+            role.equals(user.role)
+        );
     }
 
     @Override
@@ -95,12 +100,23 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return (
+            "User{" +
+            "id=" +
+            id +
+            ", name='" +
+            name +
+            '\'' +
+            ", lastName='" +
+            lastName +
+            '\'' +
+            ", email='" +
+            email +
+            '\'' +
+            ", password='" +
+            password +
+            '\'' +
+            '}'
+        );
     }
 }

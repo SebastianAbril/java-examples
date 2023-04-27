@@ -1,6 +1,5 @@
 package com.sebastianabril.pos.api.controller;
 
-
 import com.sebastianabril.pos.api.controller.dto.AddProductToInventoryRequest;
 import com.sebastianabril.pos.api.controller.dto.TransferProductRequest;
 import com.sebastianabril.pos.api.entity.Inventory;
@@ -19,31 +18,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/inventory")
 public class InventoryController {
-
     @Autowired
     private InventoryService inventoryService;
+
     @Autowired
     private InventoryMovementsService inventoryMovementsService;
-
 
     @PostMapping("/add-product-to-inventory")
     public ResponseEntity<Inventory> addProductToInventory(@RequestBody @Valid AddProductToInventoryRequest request) {
         Inventory inventory = inventoryService.addProductToInventory(
-                request.getUserId(),
-                request.getProductId(),
-                request.getQuantity()
+            request.getUserId(),
+            request.getProductId(),
+            request.getQuantity()
         );
 
         return ResponseEntity.ok(inventory);
     }
 
     @PostMapping("/transfer-product")
-    public ResponseEntity<InventoryMovement> transferProduct(@Valid @RequestBody TransferProductRequest transferredProductRequest){
+    public ResponseEntity<InventoryMovement> transferProduct(
+        @Valid @RequestBody TransferProductRequest transferredProductRequest
+    ) {
         InventoryMovement inventoryMovement = inventoryMovementsService.transferProduct(
-                transferredProductRequest.getOriginUserId(),
-                transferredProductRequest.getDestinyUserId(),
-                transferredProductRequest.getProductId(),
-                transferredProductRequest.getQuantityTransferred()
+            transferredProductRequest.getOriginUserId(),
+            transferredProductRequest.getDestinyUserId(),
+            transferredProductRequest.getProductId(),
+            transferredProductRequest.getQuantityTransferred()
         );
         return ResponseEntity.status(HttpStatus.OK).body(inventoryMovement);
     }

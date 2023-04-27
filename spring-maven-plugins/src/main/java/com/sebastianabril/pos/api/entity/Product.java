@@ -5,17 +5,16 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "product")
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String name;
     private String description;
     private Double price;
     private String code;
 
-    public Product() {
-    }
+    public Product() {}
 
     public Product(Integer id, String name, String description, Double price, String code) {
         this.id = id;
@@ -67,12 +66,21 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", code=" + code +
-                '}';
+        return (
+            "Product{" +
+            "id=" +
+            id +
+            ", name='" +
+            name +
+            '\'' +
+            ", description='" +
+            description +
+            '\'' +
+            ", price=" +
+            price +
+            ", code=" +
+            code +
+            '}'
+        );
     }
 }
