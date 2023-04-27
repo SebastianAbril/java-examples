@@ -1,0 +1,11 @@
+{
+  "timestamp": "2023-04-25T14:32:56.789Z",
+  "status": 404,
+  "error": "Not Found",
+  "message": "El recurso solicitado no se encontró en el servidor",
+  "fields": [
+    {"name": "name",
+      "message": "the name is required"
+    }
+  ]
+}
