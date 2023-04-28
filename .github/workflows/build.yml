@@ -8,6 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+
     steps:
     - uses: actions/checkout@v2
 
@@ -15,6 +16,10 @@ jobs:
       with:
         distribution: 'temurin' # See 'Supported distributions' for available options
         java-version: '17'
+
+    - name: Permission to Maven
+      run: chmod +x mvnw
+    
 
     - name: Build with Maven
       run: cd spring-maven-plugins && ./mvnw -DskipTests=true package
